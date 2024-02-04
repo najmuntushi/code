@@ -1,0 +1,54 @@
+#include <iostream>
+#include <sstream>
+#include <iomanip>
+
+struct Date {
+    int day, month, year;
+};
+
+int calculateAge(const Date& currentDate, const Date& birthDate) {
+    if (currentDate.year < birthDate.year ||
+        (currentDate.year == birthDate.year && currentDate.month < birthDate.month) ||
+        (currentDate.year == birthDate.year && currentDate.month == birthDate.month && currentDate.day < birthDate.day)) {
+        return -1;  
+    }
+
+    int age = currentDate.year - birthDate.year;
+
+    if ((currentDate.month < birthDate.month) ||
+        (currentDate.month == birthDate.month && currentDate.day < birthDate.day)) {
+        age--; 
+    }
+
+    return age;
+}
+
+int main() {
+    int T;
+    std::cin >> T;
+
+    for (int caseNumber = 1; caseNumber <= T; ++caseNumber) {
+        std::cout << "Case #" << caseNumber << ": ";
+
+        std::string dummy;
+        std::getline(std::cin, dummy);
+
+        Date currentDate, birthDate;
+        char slash;
+        std::cin >> currentDate.day >> slash >> currentDate.month >> slash >> currentDate.year;
+
+        std::cin >> birthDate.day >> slash >> birthDate.month >> slash >> birthDate.year;
+
+        int age = calculateAge(currentDate, birthDate);
+
+        if (age == -1) {
+            std::cout << "Invalid birth date" << std::endl;
+        } else if (age > 130) {
+            std::cout << "Check birth date" << std::endl;
+        } else {
+            std::cout << age << std::endl;
+        }
+    }
+
+    return 0;
+}
